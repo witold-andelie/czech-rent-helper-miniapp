@@ -1,0 +1,4 @@
+cloudfunctions
+miniprogram/**/*.json
+miniprogram/**/*.wxml
+miniprogram/**/*.wxss

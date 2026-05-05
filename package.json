@@ -1,0 +1,17 @@
+{
+  "name": "czech-rent-helper-miniapp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WeChat mini program scaffold for Czech Chinese rental board.",
+  "scripts": {
+    "lint": "eslint miniprogram --ext .js",
+    "ci:upload": "node scripts/upload-ci.js",
+    "ci:upload:local": "/Users/mac/.local/node/current/bin/node scripts/upload-ci.js",
+    "cloud:functions:deploy:local": "/Users/mac/.local/node/current/bin/node scripts/deploy-cloud-functions.js",
+    "db:seed": "node scripts/export-db-seed.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "miniprogram-ci": "^2.0.13"
+  }
+}
