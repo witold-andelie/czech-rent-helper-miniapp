@@ -1,0 +1,49 @@
+[
+  {
+    "name": "board_by_category_intent",
+    "purpose": "列表页默认查询",
+    "keys": [
+      { "field": "category", "order": "asc" },
+      { "field": "intent", "order": "asc" },
+      { "field": "status", "order": "asc" },
+      { "field": "expireAt", "order": "asc" },
+      { "field": "createdAt", "order": "desc" }
+    ]
+  },
+  {
+    "name": "board_by_city",
+    "purpose": "四城优先筛选",
+    "keys": [
+      { "field": "city", "order": "asc" },
+      { "field": "category", "order": "asc" },
+      { "field": "intent", "order": "asc" },
+      { "field": "status", "order": "asc" },
+      { "field": "createdAt", "order": "desc" }
+    ]
+  },
+  {
+    "name": "mine_by_creator",
+    "purpose": "我的帖子列表",
+    "keys": [
+      { "field": "createdBy", "order": "asc" },
+      { "field": "status", "order": "asc" },
+      { "field": "createdAt", "order": "desc" }
+    ]
+  },
+  {
+    "name": "expire_scan",
+    "purpose": "定时下线任务",
+    "keys": [
+      { "field": "status", "order": "asc" },
+      { "field": "expireAt", "order": "asc" }
+    ]
+  },
+  {
+    "name": "rate_limit_by_creator",
+    "purpose": "发帖限频统计",
+    "keys": [
+      { "field": "createdBy", "order": "asc" },
+      { "field": "createdAt", "order": "desc" }
+    ]
+  }
+]
