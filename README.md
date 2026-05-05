@@ -1,0 +1,1 @@
+# czech-rent-helper-miniapp
