@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/board/index",
+    "pages/publish/index",
+    "pages/detail/index",
+    "pages/mine/index",
+    "pages/admin/index"
+  ],
+  "lazyCodeLoading": "requiredComponents",
+  "window": {
+    "navigationBarTitleText": "捷克租房助手",
+    "navigationBarBackgroundColor": "#f5efe2",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5efe2",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#44524d",
+    "selectedColor": "#0f8f5a",
+    "backgroundColor": "#f8f3e8",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/board/index",
+        "text": "看房源"
+      },
+      {
+        "pagePath": "pages/publish/index",
+        "text": "发帖子"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
