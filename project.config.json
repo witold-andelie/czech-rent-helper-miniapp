@@ -2,7 +2,7 @@
   "miniprogramRoot": "miniprogram/",
   "cloudfunctionRoot": "cloudfunctions/",
   "compileType": "miniprogram",
-  "appid": "wxe91303325b9f2178",
+  "appid": "touristappid",
   "projectname": "捷克租房助手",
   "libVersion": "latest",
   "setting": {
