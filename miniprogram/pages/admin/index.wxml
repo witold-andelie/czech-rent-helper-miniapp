@@ -1,0 +1,84 @@
+<view class="page-shell">
+  <view class="page-glow page-glow--left"></view>
+  <view class="page-glow page-glow--right"></view>
+
+  <view class="stack" wx:if="{{previewAdmin}}">
+    <view class="hero-panel">
+      <view class="hero-kicker">Admin Only</view>
+      <view class="hero-title">管理员控制台</view>
+      <view class="hero-copy">
+        这里负责 VIP 升级、延长天数、强制下线和删帖。用户端不应开放这些能力。
+      </view>
+    </view>
+
+    <view class="card-panel">
+      <view class="section-head">
+        <view class="section-title">VIP 规则</view>
+        <button class="button-mini" bindtap="refreshPosts">刷新列表</button>
+      </view>
+      <view class="helper-text" style="margin-top: 16rpx;">
+        管理员可将任意帖子升级为 VIP，最多 3 张图，最长 360 天。正式环境中，图片应由管理员在微信内上传后写入云存储文件 ID。
+      </view>
+      <view class="helper-text" style="margin-top: 10rpx;">{{adminHint}}</view>
+      <view class="helper-text" style="margin-top: 10rpx;">当前可管理帖子：{{postCount}} 条</view>
+    </view>
+
+    <view class="empty-state" wx:if="{{!posts.length}}">
+      当前还没有可管理的帖子。
+      先从“发帖子”发布一条信息，或者下拉刷新 / 点击上方刷新列表后再回来。
+    </view>
+
+    <view class="field-list" wx:else>
+      <view class="post-card" wx:for="{{posts}}" wx:key="id">
+        <view class="post-head">
+          <view>
+            <view class="post-title">{{item.title}}</view>
+            <view class="post-meta" style="margin-top: 10rpx;">{{item.categoryLabel}} / {{item.intentLabel}} / {{item.statusLabel}}</view>
+          </view>
+          <view class="tag {{item.tier === 'vip' ? 'tag--warm' : ''}}">
+            {{item.tier === "vip" ? "VIP" : "普通"}}
+          </view>
+        </view>
+
+        <view class="field-list">
+          <view class="helper-text">{{item.mediaModerationLabelText}}</view>
+
+          <view>
+            <text class="field-label">输入 VIP 展示天数</text>
+            <input
+              class="field-input"
+              placeholder="1-360"
+              data-id="{{item.id}}"
+              bindinput="onDaysInput"
+              value="{{customDaysById[item.id]}}"
+            />
+          </view>
+
+          <view>
+            <text class="field-label">管理员代上传图片</text>
+            <view class="button-row">
+              <button class="button-secondary" bindtap="chooseImages" data-id="{{item.id}}">选择图片</button>
+            </view>
+            <view class="helper-text">VIP 帖最多 3 张图。若不重新选择，则沿用原图片。</view>
+            <view class="field-list" style="margin-top: 16rpx;" wx:if="{{localImagesById[item.id] && localImagesById[item.id].length}}">
+              <view class="post-card" wx:for="{{localImagesById[item.id]}}" wx:for-item="imagePath" wx:key="*this">
+                <image src="{{imagePath}}" mode="aspectFill" class="cover-block" lazy-load="true"></image>
+                <button class="button-danger" bindtap="removeImage" data-id="{{item.id}}" data-index="{{index}}">移除</button>
+              </view>
+            </view>
+          </view>
+
+          <view class="button-row">
+            <button class="button-primary" bindtap="applyVipUpdate" data-id="{{item.id}}">升级 / 续期</button>
+            <button class="button-secondary" bindtap="forceExpire" data-id="{{item.id}}">强制下线</button>
+            <button class="button-danger" bindtap="deletePost" data-id="{{item.id}}">删除</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-state">
+    当前账号不是管理员，或云端白名单尚未配置。
+  </view>
+</view>

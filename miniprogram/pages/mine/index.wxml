@@ -1,0 +1,64 @@
+<view class="page-shell">
+  <view class="page-glow page-glow--left"></view>
+  <view class="page-glow page-glow--right"></view>
+
+  <view class="stack">
+    <view class="hero-panel">
+      <view class="hero-kicker">My Posts</view>
+      <view class="hero-title">我的帖子</view>
+      <view class="hero-copy">
+        这里显示你发布过的内容。普通帖无需人工审核，但管理员可随时删帖或做 VIP 代操作。
+      </view>
+    </view>
+
+    <view class="card-panel">
+      <view class="section-head">
+        <view class="section-title">账号标识</view>
+        <view class="section-note">用于设置管理员白名单</view>
+      </view>
+      <view class="helper-text" style="margin-top: 16rpx;">
+        {{openid || "当前还没取到 openid，先重新进入一次页面。"}}
+      </view>
+      <view wx:if="{{userContextError}}" class="helper-text" style="margin-top: 12rpx; color: #b25b3d;">
+        {{userContextError}}
+      </view>
+      <view class="chip-row" style="margin-top: 18rpx;">
+        <button class="button-secondary" bindtap="copyOpenid">复制 openid</button>
+      </view>
+    </view>
+
+    <view wx:if="{{previewAdmin}}" class="card-panel">
+      <view class="section-head">
+        <view class="section-title">管理员入口</view>
+        <view class="section-note">{{adminHint}}</view>
+      </view>
+      <view class="helper-text" style="margin-top: 16rpx;">
+        这里可以进入 VIP 代操作后台，执行删帖、续期和代传图片。
+      </view>
+      <view class="chip-row" style="margin-top: 18rpx;">
+        <button class="button-secondary" bindtap="openAdmin">进入管理页</button>
+      </view>
+    </view>
+
+    <view class="field-list" wx:if="{{posts.length}}">
+      <view class="post-card" wx:for="{{posts}}" wx:key="id" bindtap="openDetail" data-id="{{item.id}}">
+        <view class="post-head">
+          <view>
+            <view class="post-title">{{item.title}}</view>
+            <view class="post-meta" style="margin-top: 10rpx;">{{item.locationText}}</view>
+          </view>
+          <view class="tag">{{item.statusLabel}}</view>
+        </view>
+        <view class="post-copy">{{item.ruleSummary}}</view>
+        <view class="button-row">
+          <button class="button-secondary" catchtap="openDetail" data-id="{{item.id}}">查看</button>
+          <button class="button-danger" catchtap="deletePost" data-id="{{item.id}}">删除</button>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      你还没有发布任何帖子。先去发一条短租或店铺信息，再回来管理。
+    </view>
+  </view>
+</view>

@@ -1,0 +1,4 @@
+image.cover-block {
+  width: 100%;
+  display: block;
+}

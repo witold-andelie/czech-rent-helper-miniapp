@@ -1,0 +1,154 @@
+<view class="page-shell">
+  <view class="page-glow page-glow--left"></view>
+  <view class="page-glow page-glow--right"></view>
+
+  <view class="stack">
+    <view class="hero-panel">
+      <view class="hero-kicker">Publish</view>
+      <view class="hero-title">发布一条新帖子</view>
+      <view class="hero-copy">
+        普通帖直接发布，不做人审；管理员仍可删帖。当前规则：{{ruleSummary}}
+      </view>
+    </view>
+
+    <view class="card-panel">
+      <view class="section-title">选择板块</view>
+      <view class="chip-row" style="margin-top: 20rpx;">
+        <view
+          class="chip {{form.category === item.key ? 'chip--active' : ''}}"
+          wx:for="{{categoryTabs}}"
+          wx:key="key"
+          bindtap="switchCategory"
+          data-category="{{item.key}}"
+        >
+          {{item.label}}
+        </view>
+      </view>
+
+      <view class="divider" style="margin: 22rpx 0;"></view>
+
+      <view class="section-title">选择分区</view>
+      <view class="chip-row" style="margin-top: 20rpx;">
+        <view
+          class="chip {{form.intent === item.key ? 'chip--active' : ''}}"
+          wx:for="{{intentTabs}}"
+          wx:key="key"
+          bindtap="switchIntent"
+          data-intent="{{item.key}}"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </view>
+
+    <view class="card-panel">
+      <view class="section-head">
+        <view class="section-title">填写内容</view>
+        <view class="section-note">普通帖自动展示 {{durationDays}} 天</view>
+      </view>
+
+      <view class="field-list" style="margin-top: 20rpx;">
+        <view>
+          <text class="field-label">标题</text>
+          <input class="field-input" placeholder="例如：布拉格 5 区短租单间" bindinput="onFieldInput" data-name="title" value="{{form.title}}" />
+        </view>
+
+        <view>
+          <text class="field-label">城市</text>
+          <input class="field-input" placeholder="布拉格 / 布尔诺 / 俄斯特拉发" bindinput="onFieldInput" data-name="city" value="{{form.city}}" />
+          <view class="chip-row" style="margin-top: 14rpx;">
+            <view
+              class="chip {{form.city === item ? 'chip--active' : ''}}"
+              wx:for="{{priorityCities}}"
+              wx:key="*this"
+              bindtap="chooseCity"
+              data-city="{{item}}"
+            >
+              {{item}}
+            </view>
+          </view>
+          <view class="helper-text">优先支持四个城市快捷选择，也可以手动输入其他城市。</view>
+        </view>
+
+        <view>
+          <text class="field-label">区域 / 地标</text>
+          <input class="field-input" placeholder="例如 Prague 5 / Andel" bindinput="onFieldInput" data-name="district" value="{{form.district}}" />
+        </view>
+
+        <view>
+          <text class="field-label">面积 / 房型</text>
+          <input class="field-input" placeholder="例如 2+1 / 42 平米" bindinput="onFieldInput" data-name="areaText" value="{{form.areaText}}" />
+        </view>
+
+        <view>
+          <text class="field-label">租金</text>
+          <input class="field-input" placeholder="例如 26,000 CZK / 月" bindinput="onFieldInput" data-name="priceText" value="{{form.priceText}}" />
+        </view>
+
+        <view>
+          <text class="field-label">押金</text>
+          <input class="field-input" placeholder="例如 押一付一 / 两个月押金" bindinput="onFieldInput" data-name="depositText" value="{{form.depositText}}" />
+        </view>
+
+        <view>
+          <text class="field-label">起租日期</text>
+          <input class="field-input" placeholder="例如 2025-05-01 / 尽快" bindinput="onFieldInput" data-name="availableFrom" value="{{form.availableFrom}}" />
+        </view>
+
+        <view>
+          <text class="field-label">最短租期</text>
+          <input class="field-input" placeholder="例如 3 晚 / 1 个月 / 一年起" bindinput="onFieldInput" data-name="minStayText" value="{{form.minStayText}}" />
+        </view>
+
+        <view>
+          <text class="field-label">联系人</text>
+          <input class="field-input" placeholder="例如 王女士" bindinput="onFieldInput" data-name="contactName" value="{{form.contactName}}" />
+        </view>
+
+        <view>
+          <text class="field-label">联系方式</text>
+          <input class="field-input" placeholder="建议统一填微信或电话" bindinput="onFieldInput" data-name="contactLine" value="{{form.contactLine}}" />
+        </view>
+
+        <view>
+          <text class="field-label">详细描述</text>
+          <textarea class="field-textarea" placeholder="写清位置、租期、适合对象、是否可住宿登记等。" bindinput="onFieldInput" data-name="description" value="{{form.description}}"></textarea>
+        </view>
+      </view>
+    </view>
+
+    <view class="card-panel">
+      <view class="section-head">
+        <view class="section-title">图片</view>
+        <view class="section-note">当前上限 {{imageLimit}} 张</view>
+      </view>
+
+      <view wx:if="{{imageLimit > 0}}">
+        <view class="helper-text" style="margin-top: 16rpx;">
+          普通短租帖最多 1 张图。店铺普通帖不支持传图，VIP 加图只能由管理员处理。
+        </view>
+
+        <view class="chip-row" style="margin-top: 18rpx;">
+          <button class="button-secondary" bindtap="chooseImages">选择图片</button>
+        </view>
+
+        <view class="field-list" style="margin-top: 18rpx;" wx:if="{{form.localImagePaths.length}}">
+          <view class="post-card" wx:for="{{form.localImagePaths}}" wx:key="*this">
+            <image src="{{item}}" mode="aspectFill" class="cover-block" lazy-load="true"></image>
+            <button class="button-danger" bindtap="removeImage" data-index="{{index}}">移除</button>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="notice">
+        当前板块的普通帖不允许上传图片。如需多图展示，请由管理员在 VIP 后台处理。
+      </view>
+    </view>
+
+    <view class="notice">
+      平台不参与签约、付款、担保与退款。请在发布前确认联系方式真实有效。
+    </view>
+
+    <button class="button-primary" loading="{{submitting}}" bindtap="submitForm">确认发布</button>
+  </view>
+</view>
