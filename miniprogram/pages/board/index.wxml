@@ -1,0 +1,121 @@
+<view class="page-shell">
+  <view class="page-glow page-glow--left"></view>
+  <view class="page-glow page-glow--right"></view>
+
+  <view class="stack">
+    <view class="hero-panel">
+      <view class="hero-kicker">Board</view>
+      <view class="hero-title">{{activeCategory === "shop" ? "店铺出租" : "灵活短租"}}</view>
+      <view class="hero-copy">
+        当前查看 {{activeIntent === "offer" ? "我要出租" : "我要求租"}} 分区。普通帖规则：{{activeRuleSummary}}
+      </view>
+    </view>
+
+    <view class="card-panel">
+      <view class="section-title">搜索</view>
+      <view class="field-list" style="margin-top: 20rpx;">
+        <input
+          class="field-input"
+          placeholder="搜标题、城市、区域"
+          confirm-type="search"
+          value="{{keyword}}"
+          bindinput="onKeywordInput"
+          bindconfirm="applyKeyword"
+        />
+        <view class="button-row">
+          <button class="button-secondary" bindtap="applyKeyword">搜索</button>
+          <button class="button-mini" bindtap="clearKeyword">清空</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="card-panel">
+      <view class="section-head">
+        <view class="section-title">重点城市</view>
+        <view class="section-note">布拉格 / 布尔诺 / 奥洛穆茨 / 俄斯特拉发</view>
+      </view>
+      <view class="chip-row" style="margin-top: 20rpx;">
+        <view
+          class="chip {{activeCity === item.key ? 'chip--active' : ''}}"
+          wx:for="{{cityTabs}}"
+          wx:key="key"
+          bindtap="switchCity"
+          data-city="{{item.key}}"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </view>
+
+    <view class="card-panel">
+      <view class="section-title">切换板块</view>
+      <view class="chip-row" style="margin-top: 20rpx;">
+        <view
+          class="chip {{activeCategory === item.key ? 'chip--active' : ''}}"
+          wx:for="{{categoryTabs}}"
+          wx:key="key"
+          bindtap="switchCategory"
+          data-category="{{item.key}}"
+        >
+          {{item.label}}
+        </view>
+      </view>
+
+      <view class="divider" style="margin: 22rpx 0;"></view>
+
+      <view class="section-title">切换分区</view>
+      <view class="chip-row" style="margin-top: 20rpx;">
+        <view
+          class="chip {{activeIntent === item.key ? 'chip--active' : ''}}"
+          wx:for="{{intentTabs}}"
+          wx:key="key"
+          bindtap="switchIntent"
+          data-intent="{{item.key}}"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </view>
+
+    <view class="field-list">
+      <view
+        class="post-card"
+        wx:for="{{posts}}"
+        wx:key="id"
+        bindtap="openDetail"
+        data-id="{{item.id}}"
+      >
+        <view class="post-head">
+          <view>
+            <view class="post-title">{{item.title}}</view>
+            <view class="post-meta" style="margin-top: 10rpx;">{{item.locationText}}</view>
+          </view>
+
+          <view class="tag-row">
+            <view class="tag">{{item.intentLabel}}</view>
+            <view class="tag {{item.tier === 'vip' ? 'tag--warm' : ''}}">
+              {{item.tier === "vip" ? "VIP" : "普通"}}
+            </view>
+          </view>
+        </view>
+
+        <view wx:if="{{item.hasImages}}" class="cover-block">
+          <view class="cover-text">有图房源 / 当前 {{item.imageCount}} 张</view>
+        </view>
+
+        <view class="post-copy">{{item.description}}</view>
+
+        <view class="post-foot">
+          <view class="post-meta">{{item.priceText}}</view>
+          <view class="post-meta">{{item.daysText}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{!posts.length}}" class="empty-state">
+      当前分区还没有帖子。你可以先发布第一条，或者切换到其他板块看看。
+    </view>
+
+    <button class="button-primary" bindtap="openPublish">发布新帖子</button>
+  </view>
+</view>

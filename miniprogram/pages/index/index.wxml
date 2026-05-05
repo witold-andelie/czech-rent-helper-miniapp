@@ -1,0 +1,71 @@
+<view class="page-shell">
+  <view class="page-glow page-glow--left"></view>
+  <view class="page-glow page-glow--right"></view>
+
+  <view class="stack">
+    <view class="hero-panel">
+      <view class="hero-kicker">Czech Rental Board</view>
+      <view class="hero-title">捷克华人租房信息板</view>
+      <view class="hero-copy">
+        不做交易，不做担保，只想帮在捷克找房、转店、求租的华人，让租房更容易！
+      </view>
+
+      <view class="tag-row" style="margin-top: 20rpx;">
+        <view class="tag">普通帖免人工审核</view>
+        <view class="tag">到期自动下线</view>
+        <view class="tag tag--warm">VIP 仅管理员代操作</view>
+      </view>
+
+      <view class="stat-row">
+        <view class="stat-box" wx:for="{{stats}}" wx:key="label">
+          <view class="stat-value">{{item.value}}</view>
+          <view class="stat-label">{{item.label}}</view>
+        </view>
+      </view>
+
+      <view class="hero-actions">
+        <button class="button-primary" bindtap="openPublish">马上发帖</button>
+        <button class="button-secondary" bindtap="openBoard" data-category="flex">先看房源</button>
+      </view>
+    </view>
+
+    <view class="card-panel">
+      <view class="section-head">
+        <view class="section-title">两大板块</view>
+        <view class="section-note">每个板块都含出租与求租</view>
+      </view>
+
+      <view class="module-grid" style="margin-top: 20rpx;">
+        <view
+          class="module-card"
+          wx:for="{{boards}}"
+          wx:key="category"
+          bindtap="openBoard"
+          data-category="{{item.category}}"
+        >
+          <view class="module-title">{{item.title}}</view>
+          <view class="module-copy">{{item.summary}}</view>
+          <view class="helper-text">{{item.rule}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card-panel">
+      <view class="section-head">
+        <view class="section-title">为什么做这个</view>
+        <view class="section-note">把找房这件事说得更明白一点</view>
+      </view>
+
+      <view class="field-list" style="margin-top: 20rpx;">
+        <view class="rule-card" wx:for="{{highlights}}" wx:key="title">
+          <view class="module-title">{{item.title}}</view>
+          <view class="module-copy">{{item.copy}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="notice">
+      本平台仅提供租房信息展示与联系方式，不参与签约、付款、担保与退款。
+    </view>
+  </view>
+</view>
